@@ -32,3 +32,18 @@ select "FullTimeResult", COUNT(*) as broj,
 round(COUNT(*) * 100.0 / sum(COUNT(*)) over (),2) as procenat
 from utakmice
 group by "FullTimeResult"
+
+
+"zuti kartoni"
+with kartoni as (select "HomeTeam" as tim,"HomeYellowCards" as kartoni
+from utakmice
+
+union all
+
+select "AwayTeam" as tim,"AwayYellowCards" as kartoni
+from utakmice
+)
+select tim, SUM(kartoni) as broj_kartona
+from kartoni
+group by tim
+order by broj_kartona DESC
