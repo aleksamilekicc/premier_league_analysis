@@ -26,3 +26,9 @@ from utakmice
 select tim, SUM(golovi) as ukupno_golova
 from golovi
 group by tim order by ukupno_golova DESC
+
+"Analiza ishoda meceva u procentima, domacin, gost i nereseno"
+select "FullTimeResult", COUNT(*) as broj,
+round(COUNT(*) * 100.0 / sum(COUNT(*)) over (),2) as procenat
+from utakmice
+group by "FullTimeResult"
