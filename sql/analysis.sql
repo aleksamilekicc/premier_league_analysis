@@ -64,3 +64,10 @@ SELECT
 FROM efikasnost
 GROUP BY tim
 ORDER BY efikasnost DESC
+
+"prosecan broj golova po mecu po sezoni"
+select "Season" as sezona,
+ROUND(AVG("FullTimeHomeGoals" + "FullTimeAwayGoals"), 2) as prosek_golova
+from utakmice
+group by "Season" 
+order by "Season"
