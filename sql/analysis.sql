@@ -47,3 +47,20 @@ select tim, SUM(kartoni) as broj_kartona
 from kartoni
 group by tim
 order by broj_kartona DESC
+
+"efikasnost timova, odnos golova i suteva u okvir"
+WITH efikasnost AS (
+    SELECT "HomeTeam" AS tim, "FullTimeHomeGoals" AS golovi, "HomeShotsOnTarget" AS sutevi
+    FROM utakmice
+    UNION ALL
+    SELECT "AwayTeam" AS tim, "FullTimeAwayGoals" AS golovi, "AwayShotsOnTarget" AS sutevi
+    FROM utakmice
+)
+SELECT 
+    tim,
+    SUM(golovi) AS broj_golova,
+    SUM(sutevi) AS broj_suteva,
+    ROUND(SUM(golovi) * 100.0 / SUM(sutevi), 2) || '%' AS efikasnost
+FROM efikasnost
+GROUP BY tim
+ORDER BY efikasnost DESC
