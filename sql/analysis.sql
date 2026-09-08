@@ -87,3 +87,25 @@ from crveni_kartoni
 group by tim
 order by ukupno_kartona desc
 limit 10;
+
+
+"najefikasniji timovi u poslednje tri sezone"
+with najbolja_forma as (
+select "HomeTeam" as tim
+from utakmice
+where "Season" in ('2022/23', '2023/24', '2024/25')
+and "FullTimeResult" = 'H'
+
+union all
+
+select "AwayTeam" as tim
+from utakmice
+where "Season" in ('2022/23', '2023/24', '2024/25')
+and "FullTimeResult" = 'A'
+)
+
+select tim, COUNT (*) as broj_pobeda
+from najbolja_forma
+group by tim
+order by broj_pobeda desc
+limit 10;
