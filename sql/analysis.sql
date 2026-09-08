@@ -71,3 +71,19 @@ ROUND(AVG("FullTimeHomeGoals" + "FullTimeAwayGoals"), 2) as prosek_golova
 from utakmice
 group by "Season" 
 order by "Season"
+
+
+
+"najvise crvenih kartona"
+with crveni_kartoni as (
+select "HomeTeam" as tim, "HomeRedCards" as kartoni
+from utakmice
+union all 
+select "AwayTeam" as tim, "AwayRedCards" as kartoni
+from utakmice
+)
+select tim, SUM(kartoni) as ukupno_kartona
+from crveni_kartoni
+group by tim
+order by ukupno_kartona desc
+limit 10;
